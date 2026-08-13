@@ -126,7 +126,8 @@ class AlienInvasion:
     def _update_bullets(self):
         """Updates the positions of the bullets and delete old bullets"""
 
-        # move the bullet upwards    
+        # move the bullet upwards
+        # update() automatically calls update() for each sprite in a group    
         self.bullets.update()
 
         # get rid of the bullets that have disappeared

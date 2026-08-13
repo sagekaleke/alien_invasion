@@ -35,5 +35,5 @@ class Bullet(Sprite):
     def draw_bullet(self):
         """Draw a bullet on the screen."""
 
-        # draw a rectangle on the screen using this colour at this position.
+        # draw a verticle rectangle on the screen using this colour at this position.
         pygame.draw.rect(self.screen, self.colour, self.rect)
