@@ -38,7 +38,7 @@ class AlienInvasion:
         # create an instance to store game stats
         self.stats = GameStats(self)
 
-        # create an instance of a ship from the Ship class
+        # create an instance of a ship from the Ship class and pass the current AlienInvasion instance to it
         self.ship = Ship(self)
 
         # create a group to list all the bullets
@@ -67,7 +67,7 @@ class AlienInvasion:
                 self._update_aliens()
 
             self._update_screen()
-            self.clock.tick(60) # limit the game loop to a maximum of 60 frames per second.
+            self.clock.tick(60)  # limit the game loop to a maximum of 60 FPS by pausing the loop as necessary
 
 
     def _check_events(self):
@@ -77,7 +77,7 @@ class AlienInvasion:
         # this helper function checks for events
         # an event is any activity a user does using the input devices.
         for event in pygame.event.get():
-            if event.type == pygame.QUIT:
+            if event.type == pygame.QUIT: #quit refers to the window-close button
                 sys.exit()
 
             elif event.type == pygame.KEYDOWN:
@@ -148,7 +148,7 @@ class AlienInvasion:
         for bullet in self.bullets.sprites():
             bullet.draw_bullet()
 
-        # draw/blit (a copy of) the ship on the screen at its current location.
+        # blit/draw/copy the ship on the screen at its current location.
         self.ship.blitme()
 
         # draw aliens on the screen
