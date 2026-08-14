@@ -4,6 +4,7 @@ from time import sleep
 
 from alien import Alien
 from bullet import Bullet
+from button import Button
 from game_stats import GameStats
 from settings import Settings
 from ship import Ship
@@ -54,8 +55,10 @@ class AlienInvasion:
         self._create_fleet()
 
         # start alien invasion in an active state
-        self.game_active = True
+        self.game_active = False
 
+        # make the play button
+        self.play_button = Button(self, "Play")
 
     def run_game(self):
         """Start the main loop for the game."""
@@ -88,6 +91,34 @@ class AlienInvasion:
             elif event.type == pygame.KEYUP:
                 self._check_keyup_events(event)
 
+            elif event.type == pygame.MOUSEBUTTONDOWN:
+                mouse_pos = pygame.mouse.get_pos()
+                self._check_play_button(mouse_pos)
+
+
+    def _check_play_button(self, mouse_pos):
+        """Start new game when the player clicks play"""
+
+        # collidepoint() checks whether the point of the mouse click overlaps the region defined by the Play button’s rect
+        button_clicked = self.play_button.rect.collidepoint(mouse_pos)
+
+        # we want the click to be registered only when the game is active
+        if button_clicked and not self.game_active:
+
+            # hide the mouse cursor
+            pygame.mouse.set_visible(False)
+
+            # reset the game stats
+            self.stats.reset_stats()
+            self.game_active = True
+
+            # empty the bullets and the aliens
+            self.bullets.empty()
+            self.aliens.empty()
+
+            # create a new fleet and center the ship
+            self._create_fleet()
+            self.ship.center_ship()
 
     def _check_keydown_events(self, event):
         """Respond to keypresses"""
@@ -159,6 +190,10 @@ class AlienInvasion:
 
         # draw all the aliens in the group onto the screen
         self.aliens.draw(self.screen)  
+
+        # draw the play button if the game is inactive
+        if not self.game_active:
+            self.play_button.draw_button()
 
         # while the user sees one screen, another is being created in the background.
         # .flip() flips (brings forth) the screen at the back to the front.
@@ -281,6 +316,8 @@ class AlienInvasion:
 
         else:
             self.game_active = False
+            # make the cursor visible
+            pygame.mouse.set_visible(True)
 
 
     def _check_aliens_bottom(self):
