@@ -60,6 +60,7 @@ class AlienInvasion:
         # make the play button
         self.play_button = Button(self, "Play")
 
+
     def run_game(self):
         """Start the main loop for the game."""
         while True:
@@ -105,6 +106,9 @@ class AlienInvasion:
         # we want the click to be registered only when the game is active
         if button_clicked and not self.game_active:
 
+            # reset the game's level
+            self.settings.intitialize_dynamic_settings()
+
             # hide the mouse cursor
             pygame.mouse.set_visible(False)
 
@@ -119,6 +123,8 @@ class AlienInvasion:
             # create a new fleet and center the ship
             self._create_fleet()
             self.ship.center_ship()
+            
+
 
     def _check_keydown_events(self, event):
         """Respond to keypresses"""
@@ -172,7 +178,7 @@ class AlienInvasion:
                 self.bullets.remove(bullet)
 
 
-        self._check_bullet_collisions()
+        self._check_bullet_alien_collisions()
 
 
     def _update_screen(self):
@@ -277,7 +283,7 @@ class AlienInvasion:
         self.settings.fleet_direction *= -1
 
 
-    def _check_bullet_collisions(self):
+    def _check_bullet_alien_collisions(self):
         """To check for any bullets that have hit aliens."""
         
         # if so get rid of the alien
@@ -293,6 +299,8 @@ class AlienInvasion:
             self.bullets.empty()
             # create a new fleet
             self._create_fleet()
+            # increase the speeds if every alien is shot down
+            self.settings.increase_speed()
 
 
     def _ship_hit(self):
