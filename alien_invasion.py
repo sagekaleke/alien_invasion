@@ -107,7 +107,7 @@ class AlienInvasion:
         if button_clicked and not self.game_active:
 
             # reset the game's level
-            self.settings.intitialize_dynamic_settings()
+            self.settings.initialize_dynamic_settings()
 
             # hide the mouse cursor
             pygame.mouse.set_visible(False)
