@@ -37,6 +37,9 @@ class Ship:
 
         # update self.x, not self.rect.x
         # .right/.left attributes return the x-coordinates of the ship and the screen's rects
+        # if is used for both the conditions because we don't want the ship to move only to the right side
+        # if the player pressess both the keys at the same time
+
         if self.moving_right and self.rect.right < self.screen_rect.right:
             self.x += self.settings.ship_speed
         if self.moving_left and self.rect.left > 0:

@@ -5,6 +5,9 @@ class Settings:
         """Initialise the game's settings."""
 
         # screen settings
+        # while our program allows the screen to set the game to the native resolution of the screen we are working on, 
+        # this is still needed because we need it to set screen-size-related conditions in our program
+        # pygame.display.set_mode((0, 0), pygame.FULLSCREEN) later changes these values to match the screen resolution we are playing on        
         self.screen_width = 1200
         self.screen_height = 800
 

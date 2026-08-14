@@ -16,6 +16,7 @@ class Alien(Sprite):
         self.rect = self.image.get_rect()
 
         # start each alien near the top-left corner
+        # we have set their x and y axises based on their width and height
         self.rect.x = self.rect.width
         self.rect.y = self.rect.height
 
@@ -34,5 +35,3 @@ class Alien(Sprite):
         # if the direction is left, -1 will be multiplied, else 1
         self.x += self.settings.alien_speed * self.settings.fleet_direction
         self.rect.x = self.x
-
-   
