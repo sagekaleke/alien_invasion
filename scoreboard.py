@@ -18,6 +18,7 @@ class Scoreboard:
         # prepare the initial score image
         self.prep_score()
         self.prep_high_score()
+        self.prep_level()
 
 
     def prep_score(self):
@@ -43,6 +44,8 @@ class Scoreboard:
 
     def prep_high_score(self):
 
+        """Turn the high_score to a str and an image"""
+
         high_score = round(self.stats.high_score, -1)
 
         high_score_str = f"{high_score:,}"
@@ -53,17 +56,34 @@ class Scoreboard:
         self.high_score_rect.centerx = self.screen_rect.centerx
         self.high_score_rect.top = self.screen_rect.top
 
+    def prep_level(self):
+        """Turn the level to a str and an image"""
+
+        level = self.stats.level
+        level_str = str(level)
+
+        self.level_image = self.font.render(level_str, True, self.text_color, self.settings.bg_color)
+
+        self.level_rect = self.level_image.get_rect()
+        self.level_rect.right = self.score_rect.right
+        self.level_rect.top = self.score_rect.bottom + 10
+
+
     def show_score(self):
         """Draw score to the screen."""
 
-        # show the score_image at the score_rect position
+        # show the score_image at the score_rect position on the screen
         self.screen.blit(self.score_image, self.score_rect)
 
-        # show the high_score_image at the top-center position
+        # show the high_score_image at the top-center position on the screen
         self.screen.blit(self.high_score_image, self.high_score_rect)
+
+        # show the level_image at the level_rect position on the screen
+        self.screen.blit(self.level_image, self.level_rect)
 
     def check_high_score(self):
         if self.stats.score > self.stats.high_score:
             self.stats.high_score = self.stats.score
             self.prep_high_score()
 
+        

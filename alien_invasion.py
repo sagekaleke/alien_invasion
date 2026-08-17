@@ -117,8 +117,11 @@ class AlienInvasion:
 
             # reset the game stats
             self.stats.reset_stats()
-            # prep the score again after restting the stats
+            # prep the score again after resetting the stats
             self.sb.prep_score()
+            # prep the level after resetting the stats
+            self.sb.prep_level()
+            
             self.game_active = True
 
             # empty the bullets and the aliens
@@ -320,6 +323,9 @@ class AlienInvasion:
             self._create_fleet()
             # increase the speeds if every alien is shot down
             self.settings.increase_speed()
+            # increase the level by 1 and show it on the screen
+            self.stats.level += 1 
+            self.sb.prep_level()
 
 
     def _ship_hit(self):
