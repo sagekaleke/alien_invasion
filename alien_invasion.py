@@ -6,6 +6,7 @@ from alien import Alien
 from bullet import Bullet
 from button import Button
 from game_stats import GameStats
+from scoreboard import Scoreboard
 from settings import Settings
 from ship import Ship
 
@@ -40,6 +41,8 @@ class AlienInvasion:
 
         # create an instance of GameStats from the GameStats class to store the gamestats and pass the current AlienInvasion instance to it
         self.stats = GameStats(self)
+        # create an instance of Scoreboard to show the GameStats
+        self.sb = Scoreboard(self)
 
         # create an instance of a ship from the Ship class and pass the current AlienInvasion instance to it
         self.ship = Ship(self)
@@ -114,6 +117,8 @@ class AlienInvasion:
 
             # reset the game stats
             self.stats.reset_stats()
+            # prep the score again after restting the stats
+            self.sb.prep_score()
             self.game_active = True
 
             # empty the bullets and the aliens
@@ -124,7 +129,6 @@ class AlienInvasion:
             self._create_fleet()
             self.ship.center_ship()
             
-
 
     def _check_keydown_events(self, event):
         """Respond to keypresses"""
@@ -196,6 +200,9 @@ class AlienInvasion:
 
         # draw all the aliens in the group onto the screen
         self.aliens.draw(self.screen)  
+
+        # draw the scoreboard on to the screen
+        self.sb.show_score()
 
         # draw the play button if the game is inactive
         if not self.game_active:
@@ -288,8 +295,17 @@ class AlienInvasion:
         
         # if so get rid of the alien
         # this returns a dictionary with bullets as keys, and aliens as values
-        # False means that bullets won't be deleted upon collission and vice-verse 
+        # False means that bullets won't be deleted upon collision and vice-verse 
         collisions = pygame.sprite.groupcollide(self.bullets, self.aliens, False, True)
+
+        if collisions:
+            # every bullet is a key and all the aliens it collided with are values
+            # we loop through the values to ensure that every hit is scored.
+            for aliens in collisions.values():
+                self.stats.score += self.settings.alien_points * len(aliens)
+
+            # render the updated score to an image
+            self.sb.prep_score()
 
         # check if the fleet is destroyed
         if not self.aliens:
