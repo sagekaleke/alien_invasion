@@ -307,6 +307,9 @@ class AlienInvasion:
             # render the updated score to an image
             self.sb.prep_score()
 
+            # render the updated high_score to an image
+            self.sb.check_high_score()
+
         # check if the fleet is destroyed
         if not self.aliens:
             # remove existing bullets
