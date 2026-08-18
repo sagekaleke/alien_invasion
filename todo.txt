@@ -1,0 +1,3 @@
+# when no ship is left, end the game with game over on the screen.
+# add sounds to the game.
+# fix the numbers for each variable in settings
